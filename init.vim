@@ -79,7 +79,8 @@ EOF
 
 nnoremap <Esc> :nohlsearch<CR>
 nnoremap gg gg^
-nnoremap g0 ^
+nnoremap g) ^
+nnoremap - $
 
 " Toggle diagnostic floating window with spacebar
 lua << EOF
