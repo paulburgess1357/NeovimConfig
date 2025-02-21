@@ -24,7 +24,7 @@ noremap <Right> <NOP>
 call plug#begin('~/.config/nvim/plugged')
 
 " LSP Support
-Plug 'neovim/nvim-lspconfig'
+    Plug 'neovim/nvim-lspconfig'
 
 " Tokyo Night Colorscheme
 Plug 'folke/tokyonight.nvim'
@@ -79,6 +79,7 @@ EOF
 
 nnoremap <Esc> :nohlsearch<CR>
 nnoremap gg gg^
+nnoremap g0 ^
 
 " Toggle diagnostic floating window with spacebar
 lua << EOF
