@@ -1,3 +1,21 @@
 CompileFlags:
-  Add: -std=c++20
+  Add: [
+    -std=c++20,
+    -I./include,
+    -Wall,
+    -Wextra,
+    -Wpedantic,
+    -Weverything,
+    -Werror,
+    -Wshadow,
+    -Wconversion,
+    -Wsign-conversion,
+    -Wundef,
+    -Wmissing-include-dirs,
+    -Wfloat-conversion,
+    -Wformat=2,
+    -Wunreachable-code,
+    -Wdouble-promotion,
 
+    -Wno-c++98-compat
+  ]

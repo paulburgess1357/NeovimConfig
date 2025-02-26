@@ -1,5 +1,6 @@
 Checks: >
   -*,
+  clang-diagnostic-*,
   clang-analyzer-*,
   cppcoreguidelines-*,
   modernize-*,
@@ -16,16 +17,7 @@ FormatStyle: file
 CheckOptions:
   - key:             cppcoreguidelines-avoid-magic-numbers.IgnoreNumbers
     value:           '0,1'          # Ignore 0 and 1 as magic numbers
-  - key:             cppcoreguidelines-avoid-magic-numbers.IgnoreStaticallyDeclaredConstants
-    value:           '1'
-  - key:             modernize-use-nullptr.NullMacros
-    value:           'NULL'         # Recognize NULL as a null pointer macro
   - key:             readability-identifier-naming.ClassCase
     value:           'CamelCase'    # Enforce CamelCase naming for classes
   - key:             readability-identifier-naming.FunctionCase
     value:           'camelBack'    # Enforce lower camelCase naming for functions
-  - key:             modernize-loop-convert.MinConfidence
-    value:           'reasonable'   # Adjust threshold for auto-loop conversion
-  - key:             performance-unnecessary-value-param.AllowedTypes
-    value:           'std::string, std::vector'  # Example: allow value parameters for these types
-
