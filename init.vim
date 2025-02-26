@@ -42,7 +42,7 @@ lua << EOF
 -- Configure clangd for LSP with clang-tidy and detailed completions.
 local lspconfig = require('lspconfig')
 lspconfig.clangd.setup({
-    cmd = { "clangd", "--clang-tidy", "--completion-style=detailed", "--function-arg-placeholders" },
+    cmd = { "clangd", "--clang-tidy", "--completion-style=detailed" },
     on_attach = function(client, bufnr)
         -- LSP keybindings
         vim.keymap.set("n", "gd", vim.lsp.buf.definition, { noremap = true, silent = true })
