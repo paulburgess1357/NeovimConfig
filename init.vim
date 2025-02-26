@@ -24,7 +24,7 @@ noremap <Right> <NOP>
 call plug#begin('~/.config/nvim/plugged')
 
 " LSP Support
-    Plug 'neovim/nvim-lspconfig'
+Plug 'neovim/nvim-lspconfig'
 
 " Tokyo Night Colorscheme
 Plug 'folke/tokyonight.nvim'
@@ -64,7 +64,7 @@ require('nvim-treesitter.configs').setup({
     ensure_installed = { "c", "cpp", "lua", "markdown" },
     highlight = {
         enable = true,              -- Enable Treesitter-based highlighting
-        additional_vim_regex_highlighting = false,
+        additional_vim_regex_highlighting = true,
     },
 })
 
