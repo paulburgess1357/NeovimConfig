@@ -19,5 +19,5 @@ CompileFlags:
 
     -Wno-c++98-compat,
     -Wno-sign-compare,
-    -Wno-sign-conversion
-  ]
+    -Wno-sign-conversion,
+    -Wno-shorten-64-to-32,

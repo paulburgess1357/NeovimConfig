@@ -10,7 +10,12 @@ Checks: >
   misc-*,
   portability-*,
   security-*,
-  hicpp-*
+  hicpp-*,
+
+  -cppcoreguidelines-narrowing-conversions,
+  -bugprone-narrowing-conversions
+
+
 WarningsAsErrors: ''
 HeaderFilterRegex: '.*'
 FormatStyle: file
