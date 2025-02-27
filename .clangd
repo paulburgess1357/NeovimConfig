@@ -17,5 +17,7 @@ CompileFlags:
     -Wunreachable-code,
     -Wdouble-promotion,
 
-    -Wno-c++98-compat
+    -Wno-c++98-compat,
+    -Wno-sign-compare,
+    -Wno-sign-conversion
   ]
