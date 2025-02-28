@@ -21,6 +21,7 @@ noremap <Down> <NOP>
 noremap <Left> <NOP>
 noremap <Right> <NOP>
 
+" Initialize plugins with vim-plug
 call plug#begin('~/.config/nvim/plugged')
 
 " LSP Support
@@ -30,11 +31,15 @@ Plug 'neovim/nvim-lspconfig'
 Plug 'folke/tokyonight.nvim'
 
 " Treesitter for enhanced syntax highlighting and parsing.
-" The { 'do': ':TSUpdate' } part automatically updates installed parsers.
 Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
 
 " File manager: nvim-tree
 Plug 'kyazdani42/nvim-tree.lua'
+
+" Completion engine and sources
+Plug 'hrsh7th/nvim-cmp'           " Core completion engine
+Plug 'hrsh7th/cmp-nvim-lsp'       " LSP source for nvim-cmp (clangd for C++)
+Plug 'hrsh7th/cmp-buffer'         " Buffer completions
 
 call plug#end()
 
@@ -71,9 +76,13 @@ EOF
 
 " Configure clangd for LSP with clang-tidy and detailed completions.
 lua << EOF
+local capabilities = vim.lsp.protocol.make_client_capabilities()
+capabilities = require('cmp_nvim_lsp').default_capabilities(capabilities)
+
 local lspconfig = require('lspconfig')
 lspconfig.clangd.setup({
     cmd = { "clangd", "--clang-tidy", "--completion-style=detailed" },
+    capabilities = capabilities,
     on_attach = function(client, bufnr)
         -- LSP keybindings
         vim.keymap.set("n", "gd", vim.lsp.buf.definition, { noremap = true, silent = true })
@@ -126,5 +135,39 @@ function ToggleDiagnosticFloat()
   end
 end
 vim.keymap.set("n", "<Space>", ToggleDiagnosticFloat, { noremap = true, silent = true })
+EOF
+
+" Configure nvim-cmp for code completion
+lua << EOF
+local cmp = require'cmp'
+
+cmp.setup({
+  mapping = cmp.mapping.preset.insert({
+    ['<C-b>'] = cmp.mapping.scroll_docs(-4),  -- Scroll docs up.
+    ['<C-f>'] = cmp.mapping.scroll_docs(4),     -- Scroll docs down.
+    ['<C-Space>'] = cmp.mapping.complete(),     -- Trigger completion.
+    ['<C-e>'] = cmp.mapping.abort(),            -- Abort completion.
+    ['<CR>'] = cmp.mapping.confirm({ select = true }), -- Confirm selection.
+    ['<Tab>'] = cmp.mapping(function(fallback)
+      if cmp.visible() then
+        cmp.select_next_item()
+      else
+        fallback()
+      end
+    end, { "i", "s" }),
+    ['<S-Tab>'] = cmp.mapping(function(fallback)
+      if cmp.visible() then
+        cmp.select_prev_item()
+      else
+        fallback()
+      end
+    end, { "i", "s" }),
+  }),
+  sources = cmp.config.sources({
+    { name = 'nvim_lsp' },
+  }, {
+    { name = 'buffer' },
+  })
+})
 EOF
 
