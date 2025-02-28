@@ -1,52 +1,71 @@
-" Enable syntax highlighting
+" =====================================================
+" Basic Settings
+" =====================================================
+
+" Enable syntax highlighting.
 syntax on
 
-" Line numbering
-set number            " Show absolute line numbers
-set relativenumber    " Show relative line numbers
-
-" Indentation settings
-set tabstop=4         " Set tab width to 4 spaces
-set shiftwidth=4      " Auto-indent width
-set expandtab         " Convert tabs to spaces
-set autoindent        " Auto-indent new lines
-set smartindent       " Smarter indentation for code
-
-" Disable legacy Vim behavior
+" Disable legacy Vim behavior.
 set nocompatible
 
-" Disable arrow keys for movement (force usage of hjkl)
+" -------------------------
+" Line Numbering
+" -------------------------
+set number            " Show absolute line numbers.
+set relativenumber    " Show relative line numbers.
+
+" -------------------------
+" Indentation Settings
+" -------------------------
+set tabstop=2         " Set tab width to 4 spaces.
+set shiftwidth=2      " Auto-indent width.
+set softtabstop=2     " Makes editing feel for natural
+set expandtab         " Convert tabs to spaces.
+set autoindent        " Auto-indent new lines.
+set smartindent       " Smarter indentation for code.
+
+" -------------------------
+" Key Mappings: Movement
+" -------------------------
+" Disable arrow keys to force use of hjkl.
 noremap <Up> <NOP>
 noremap <Down> <NOP>
 noremap <Left> <NOP>
 noremap <Right> <NOP>
 
-" Initialize plugins with vim-plug
+
+" =====================================================
+" Plugin Management (vim-plug)
+" =====================================================
+
 call plug#begin('~/.config/nvim/plugged')
 
-" LSP Support
+" LSP Support.
 Plug 'neovim/nvim-lspconfig'
 
-" Tokyo Night Colorscheme
+" Tokyo Night Colorscheme.
 Plug 'folke/tokyonight.nvim'
 
 " Treesitter for enhanced syntax highlighting and parsing.
 Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
 
-" File manager: nvim-tree
+" File manager: nvim-tree.
 Plug 'kyazdani42/nvim-tree.lua'
 
-" Completion engine and sources
-Plug 'hrsh7th/nvim-cmp'           " Core completion engine
-Plug 'hrsh7th/cmp-nvim-lsp'        " LSP source for nvim-cmp (clangd for C++)
-Plug 'hrsh7th/cmp-buffer'          " Buffer completions
+" Completion engine and sources.
+Plug 'hrsh7th/nvim-cmp'           " Core completion engine.
+Plug 'hrsh7th/cmp-nvim-lsp'        " LSP source for nvim-cmp (clangd for C++).
+Plug 'hrsh7th/cmp-buffer'          " Buffer completions.
 
-" Auto-pairs plugin for automatically inserting closing pairs
+" Auto-pairs for automatically inserting closing pairs.
 Plug 'windwp/nvim-autopairs'
 
 call plug#end()
 
-" Configure Tokyo Night theme
+
+" =====================================================
+" Theme Configuration: Tokyo Night
+" =====================================================
 lua << EOF
 require("tokyonight").setup({
     style = "night",  -- Options: "night", "storm", "moon", or "day"
@@ -54,7 +73,10 @@ require("tokyonight").setup({
 vim.cmd("colorscheme tokyonight")
 EOF
 
-" Configure nvim-tree and map CTRL-n to toggle it
+
+" =====================================================
+" File Explorer Configuration: nvim-tree
+" =====================================================
 lua << EOF
 local api = require("nvim-tree.api")
 require("nvim-tree").setup({
@@ -77,7 +99,10 @@ require("nvim-tree").setup({
 vim.api.nvim_set_keymap("n", "<C-n>", ":NvimTreeToggle<CR>", { noremap = true, silent = true })
 EOF
 
-" Configure clangd for LSP with clang-tidy and detailed completions.
+
+" =====================================================
+" LSP Configuration: Clangd with clang-tidy
+" =====================================================
 lua << EOF
 local capabilities = vim.lsp.protocol.make_client_capabilities()
 capabilities = require('cmp_nvim_lsp').default_capabilities(capabilities)
@@ -87,50 +112,65 @@ lspconfig.clangd.setup({
     cmd = { "clangd", "--clang-tidy", "--completion-style=detailed" },
     capabilities = capabilities,
     on_attach = function(client, bufnr)
-        -- LSP keybindings
+        -- LSP keybindings.
         vim.keymap.set("n", "gd", vim.lsp.buf.definition, { noremap = true, silent = true })
         vim.keymap.set("n", "K", vim.lsp.buf.hover, { noremap = true, silent = true })
         vim.keymap.set("n", "<leader>rn", vim.lsp.buf.rename, { noremap = true, silent = true })
 
-        -- Auto format on save if the client supports formatting.
+        -- Auto-format on save if supported.
         if client.supports_method("textDocument/formatting") then
           vim.cmd([[
           augroup LspFormatting
             autocmd! * <buffer>
             autocmd BufWritePre <buffer> lua vim.lsp.buf.format({ async = false })
           augroup END
-        ]])
+          ]])
         end 
     end
 })
 EOF
 
-" Treesitter configuration.
+
+" =====================================================
+" Treesitter Configuration
+" =====================================================
 lua << EOF
 require('nvim-treesitter.configs').setup({
     ensure_installed = { "c", "cpp", "lua", "markdown" },
     highlight = {
-        enable = true,              -- Enable Treesitter-based highlighting
+        enable = true,              -- Enable Treesitter-based highlighting.
         additional_vim_regex_highlighting = true,
     }
 })
 EOF
 
-" Configure diagnostics: disable inline virtual text but keep signs, underlines, etc.
+
+" =====================================================
+" Diagnostics Configuration
+" =====================================================
 lua << EOF
 vim.diagnostic.config({
-    virtual_text = false,  -- Disable inline virtual text diagnostics
+    virtual_text = false,  -- Disable inline virtual text diagnostics.
     signs = true,
     underline = true,
     update_in_insert = false,
 })
 EOF
 
-" Other key mappings
+
+" =====================================================
+" General Key Mappings
+" =====================================================
+
+" Clear search highlight with Escape.
 nnoremap <Esc> :nohlsearch<CR>
+
+" Remap gg to go to the first non-blank character of the line.
 nnoremap gg gg^
 
-" Toggle diagnostic floating window with spacebar
+" =====================================================
+" Toggle Diagnostic Floating Window
+" =====================================================
 lua << EOF
 function ToggleDiagnosticFloat()
   local diagnostic_win = nil
@@ -150,7 +190,10 @@ end
 vim.keymap.set("n", "<Space>", ToggleDiagnosticFloat, { noremap = true, silent = true })
 EOF
 
-" Configure nvim-cmp for code completion
+
+" =====================================================
+" Completion and Auto-Pairs Configuration: nvim-cmp
+" =====================================================
 lua << EOF
 local cmp = require'cmp'
 
