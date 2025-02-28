@@ -38,8 +38,11 @@ Plug 'kyazdani42/nvim-tree.lua'
 
 " Completion engine and sources
 Plug 'hrsh7th/nvim-cmp'           " Core completion engine
-Plug 'hrsh7th/cmp-nvim-lsp'       " LSP source for nvim-cmp (clangd for C++)
-Plug 'hrsh7th/cmp-buffer'         " Buffer completions
+Plug 'hrsh7th/cmp-nvim-lsp'        " LSP source for nvim-cmp (clangd for C++)
+Plug 'hrsh7th/cmp-buffer'          " Buffer completions
+
+" Auto-pairs plugin for automatically inserting closing pairs
+Plug 'windwp/nvim-autopairs'
 
 call plug#end()
 
@@ -88,6 +91,16 @@ lspconfig.clangd.setup({
         vim.keymap.set("n", "gd", vim.lsp.buf.definition, { noremap = true, silent = true })
         vim.keymap.set("n", "K", vim.lsp.buf.hover, { noremap = true, silent = true })
         vim.keymap.set("n", "<leader>rn", vim.lsp.buf.rename, { noremap = true, silent = true })
+
+        -- Auto format on save if the client supports formatting.
+        if client.supports_method("textDocument/formatting") then
+          vim.cmd([[
+          augroup LspFormatting
+            autocmd! * <buffer>
+            autocmd BufWritePre <buffer> lua vim.lsp.buf.format({ async = false })
+          augroup END
+        ]])
+        end 
     end
 })
 EOF
@@ -99,7 +112,7 @@ require('nvim-treesitter.configs').setup({
     highlight = {
         enable = true,              -- Enable Treesitter-based highlighting
         additional_vim_regex_highlighting = true,
-    },
+    }
 })
 EOF
 
@@ -169,5 +182,10 @@ cmp.setup({
     { name = 'buffer' },
   })
 })
+
+-- Setup nvim-autopairs and integrate it with nvim-cmp.
+require('nvim-autopairs').setup{}
+local cmp_autopairs = require('nvim-autopairs.completion.cmp')
+cmp.event:on('confirm_done', cmp_autopairs.on_confirm_done())
 EOF
 
