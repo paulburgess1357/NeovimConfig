@@ -33,13 +33,44 @@ Plug 'folke/tokyonight.nvim'
 " The { 'do': ':TSUpdate' } part automatically updates installed parsers.
 Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
 
+" File manager: nvim-tree
+Plug 'kyazdani42/nvim-tree.lua'
+
 call plug#end()
 
-" Set Tokyo Night as the colorscheme
-colorscheme tokyonight
-
+" Configure Tokyo Night theme
 lua << EOF
--- Configure clangd for LSP with clang-tidy and detailed completions.
+require("tokyonight").setup({
+    style = "night",  -- Options: "night", "storm", "moon", or "day"
+})
+vim.cmd("colorscheme tokyonight")
+EOF
+
+" Configure nvim-tree and map CTRL-n to toggle it
+lua << EOF
+local api = require("nvim-tree.api")
+require("nvim-tree").setup({
+  view = {
+    width = 20,
+    side = "left",
+  },
+  filters = {
+    dotfiles = false,
+  },
+  on_attach = function(bufnr)
+    local function opts(desc)
+      return { desc = "nvim-tree: " .. desc, buffer = bufnr, noremap = true, silent = true, nowait = true }
+    end
+    vim.keymap.set("n", "t", api.node.open.tab, opts("Open: New Tab"))
+    vim.keymap.set("n", "s", api.node.open.horizontal, opts("Open: Split"))
+    vim.keymap.set("n", "v", api.node.open.vertical, opts("Open: VSplit"))
+  end,
+})
+vim.api.nvim_set_keymap("n", "<C-n>", ":NvimTreeToggle<CR>", { noremap = true, silent = true })
+EOF
+
+" Configure clangd for LSP with clang-tidy and detailed completions.
+lua << EOF
 local lspconfig = require('lspconfig')
 lspconfig.clangd.setup({
     cmd = { "clangd", "--clang-tidy", "--completion-style=detailed" },
@@ -50,16 +81,10 @@ lspconfig.clangd.setup({
         vim.keymap.set("n", "<leader>rn", vim.lsp.buf.rename, { noremap = true, silent = true })
     end
 })
+EOF
 
--- Configure the Tokyo Night theme.
-require("tokyonight").setup({
-    style = "night",  -- Options: "night", "storm", "moon", or "day"
-})
-vim.cmd("colorscheme tokyonight")
-
--- Treesitter configuration.
--- This ensures Treesitter installs parsers for C, C++, Lua, and Markdown.
--- Markdown is included to prevent errors when hovering.
+" Treesitter configuration.
+lua << EOF
 require('nvim-treesitter.configs').setup({
     ensure_installed = { "c", "cpp", "lua", "markdown" },
     highlight = {
@@ -67,8 +92,10 @@ require('nvim-treesitter.configs').setup({
         additional_vim_regex_highlighting = true,
     },
 })
+EOF
 
--- Configure diagnostics: disable inline virtual text but keep signs, underlines, etc.
+" Configure diagnostics: disable inline virtual text but keep signs, underlines, etc.
+lua << EOF
 vim.diagnostic.config({
     virtual_text = false,  -- Disable inline virtual text diagnostics
     signs = true,
@@ -77,6 +104,7 @@ vim.diagnostic.config({
 })
 EOF
 
+" Other key mappings
 nnoremap <Esc> :nohlsearch<CR>
 nnoremap gg gg^
 
@@ -84,7 +112,6 @@ nnoremap gg gg^
 lua << EOF
 function ToggleDiagnosticFloat()
   local diagnostic_win = nil
-  -- Iterate through all windows to find a floating window
   for _, win in ipairs(vim.api.nvim_list_wins()) do
     local config = vim.api.nvim_win_get_config(win)
     if config.relative ~= "" then
@@ -98,7 +125,6 @@ function ToggleDiagnosticFloat()
     vim.diagnostic.open_float(nil, { focus = false })
   end
 end
-
 vim.keymap.set("n", "<Space>", ToggleDiagnosticFloat, { noremap = true, silent = true })
 EOF
 
