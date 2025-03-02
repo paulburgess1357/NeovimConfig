@@ -92,7 +92,7 @@ require("nvim-tree").setup({
       return { desc = "nvim-tree: " .. desc, buffer = bufnr, noremap = true, silent = true, nowait = true }
     end
     vim.keymap.set("n", "t", api.node.open.tab, opts("Open: New Tab"))
-    vim.keymap.set("n", "s", api.node.open.horizontal, opts("Open: Split"))
+    vim.keymap.set("n", "h", api.node.open.horizontal, opts("Open: Split"))
     vim.keymap.set("n", "v", api.node.open.vertical, opts("Open: VSplit"))
   end,
 })
@@ -103,6 +103,7 @@ EOF
 " =====================================================
 " LSP Configuration: Clangd with clang-tidy
 " =====================================================
+
 lua << EOF
 local capabilities = vim.lsp.protocol.make_client_capabilities()
 capabilities = require('cmp_nvim_lsp').default_capabilities(capabilities)
@@ -112,12 +113,10 @@ lspconfig.clangd.setup({
     cmd = { "clangd", "--clang-tidy", "--completion-style=detailed" },
     capabilities = capabilities,
     on_attach = function(client, bufnr)
-        -- LSP keybindings.
         vim.keymap.set("n", "gd", vim.lsp.buf.definition, { noremap = true, silent = true })
         vim.keymap.set("n", "K", vim.lsp.buf.hover, { noremap = true, silent = true })
         vim.keymap.set("n", "<leader>rn", vim.lsp.buf.rename, { noremap = true, silent = true })
 
-        -- Auto-format on save if supported.
         if client.supports_method("textDocument/formatting") then
           vim.cmd([[
           augroup LspFormatting
@@ -129,6 +128,7 @@ lspconfig.clangd.setup({
     end
 })
 EOF
+
 
 
 " =====================================================
@@ -184,7 +184,7 @@ function ToggleDiagnosticFloat()
   if diagnostic_win then
     vim.api.nvim_win_close(diagnostic_win, true)
   else
-    vim.diagnostic.open_float(nil, { focus = false })
+    vim.diagnostic.open_float(nil, { focus = false, source = "always" })
   end
 end
 vim.keymap.set("n", "<Space>", ToggleDiagnosticFloat, { noremap = true, silent = true })
@@ -231,4 +231,3 @@ require('nvim-autopairs').setup{}
 local cmp_autopairs = require('nvim-autopairs.completion.cmp')
 cmp.event:on('confirm_done', cmp_autopairs.on_confirm_done())
 EOF
-
