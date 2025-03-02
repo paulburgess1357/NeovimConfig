@@ -33,6 +33,10 @@ noremap <Down> <NOP>
 noremap <Left> <NOP>
 noremap <Right> <NOP>
 
+" -------------------------
+" Misc:  
+" -------------------------
+set nowrap            " Disable line wrap
 
 " =====================================================
 " Plugin Management (vim-plug)
