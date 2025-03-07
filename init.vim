@@ -108,51 +108,176 @@ cabbrev <expr> q! getcmdline() ==# 'q!' ? 'Bclose!' : 'q!'
 cabbrev <expr> qw getcmdline() ==# 'qw' ? 'Bclose' : 'qw'
 
 " =====================================================
-" Window Cycling Key Mappings (wrap‑around, skipping NvimTree)
+" Enhanced Window Cycling (only within same row or column)
 " =====================================================
+
+" Horizontal cycling: only cycle among windows on the same row.
 function! CycleWindowRightNonTree()
-  let total = winnr('$')
-  let tried = 0
-  while tried < total
-    " If at the last window, wrap to the first window; otherwise, move right.
-    if winnr() == winnr('$')
-      execute "wincmd t"
-    else
-      execute "wincmd l"
+  let cur_win = winnr()
+  let cur_pos = win_screenpos(cur_win)
+  let cur_row = cur_pos[0]
+  let cur_col = cur_pos[1]
+
+  " Collect windows in the same row (excluding NvimTree)
+  let wins = []
+  for w in range(1, winnr('$'))
+    if getbufvar(winbufnr(w), '&filetype') ==# 'NvimTree'
+      continue
     endif
-    " If the new window is not NvimTree, stop cycling.
-    if &filetype !=# 'NvimTree'
-      return
+    let pos = win_screenpos(w)
+    if pos[0] == cur_row
+      call add(wins, { 'num': w, 'col': pos[1] })
     endif
-    let tried += 1
-  endwhile
+  endfor
+
+  " Only proceed if there’s more than one window in this row.
+  if len(wins) <= 1
+    return
+  endif
+
+  " Sort windows by their column position.
+  call sort(wins, {a, b -> a.col - b.col})
+  " Find the current window’s index.
+  let cur_index = -1
+  for i in range(0, len(wins)-1)
+    if wins[i].num == cur_win
+      let cur_index = i
+      break
+    endif
+  endfor
+  if cur_index == -1
+    return
+  endif
+
+  " Move to the next window in the row (wrap around if needed).
+  let next_index = (cur_index + 1) % len(wins)
+  execute wins[next_index].num . "wincmd w"
 endfunction
 
 function! CycleWindowLeftNonTree()
-  let total = winnr('$')
-  let start = winnr()
-  let cur = start
-  while 1
-    " Compute the previous window number, wrapping if needed.
-    if cur == 1
-      let cur = total
-    else
-      let cur = cur - 1
+  let cur_win = winnr()
+  let cur_pos = win_screenpos(cur_win)
+  let cur_row = cur_pos[0]
+  let cur_col = cur_pos[1]
+
+  " Collect windows in the same row (excluding NvimTree)
+  let wins = []
+  for w in range(1, winnr('$'))
+    if getbufvar(winbufnr(w), '&filetype') ==# 'NvimTree'
+      continue
     endif
-    " If this window's buffer is not NvimTree, switch focus to it.
-    if getbufvar(winbufnr(cur), '&filetype') !=# 'NvimTree'
-      execute cur . "wincmd w"
+    let pos = win_screenpos(w)
+    if pos[0] == cur_row
+      call add(wins, { 'num': w, 'col': pos[1] })
+    endif
+  endfor
+
+  if len(wins) <= 1
+    return
+  endif
+
+  call sort(wins, {a, b -> a.col - b.col})
+  let cur_index = -1
+  for i in range(0, len(wins)-1)
+    if wins[i].num == cur_win
+      let cur_index = i
       break
     endif
-    " If we've come full circle, break out.
-    if cur == start
-      break
-    endif
-  endwhile
+  endfor
+  if cur_index == -1
+    return
+  endif
+
+  " Move to the previous window in the row (wrap around if needed).
+  let prev_index = (cur_index - 1 + len(wins)) % len(wins)
+  execute wins[prev_index].num . "wincmd w"
 endfunction
 
-nnoremap <C-Right> :call CycleWindowRightNonTree()<CR>   " Map Ctrl+Right to cycle right (skipping NvimTree)
-nnoremap <C-Left>  :call CycleWindowLeftNonTree()<CR>    " Map Ctrl+Left to cycle left (skipping NvimTree)
+" Vertical cycling: only cycle among windows in the same column.
+function! CycleWindowDownNonTree()
+  let cur_win = winnr()
+  let cur_pos = win_screenpos(cur_win)
+  let cur_row = cur_pos[0]
+  let cur_col = cur_pos[1]
+
+  " Collect windows in the same column (excluding NvimTree)
+  let wins = []
+  for w in range(1, winnr('$'))
+    if getbufvar(winbufnr(w), '&filetype') ==# 'NvimTree'
+      continue
+    endif
+    let pos = win_screenpos(w)
+    if pos[1] == cur_col
+      call add(wins, { 'num': w, 'row': pos[0] })
+    endif
+  endfor
+
+  if len(wins) <= 1
+    return
+  endif
+
+  " Sort windows by their row position.
+  call sort(wins, {a, b -> a.row - b.row})
+  let cur_index = -1
+  for i in range(0, len(wins)-1)
+    if wins[i].num == cur_win
+      let cur_index = i
+      break
+    endif
+  endfor
+  if cur_index == -1
+    return
+  endif
+
+  " Move to the next window in the column (wrap around if needed).
+  let next_index = (cur_index + 1) % len(wins)
+  execute wins[next_index].num . "wincmd w"
+endfunction
+
+function! CycleWindowUpNonTree()
+  let cur_win = winnr()
+  let cur_pos = win_screenpos(cur_win)
+  let cur_row = cur_pos[0]
+  let cur_col = cur_pos[1]
+
+  " Collect windows in the same column (excluding NvimTree)
+  let wins = []
+  for w in range(1, winnr('$'))
+    if getbufvar(winbufnr(w), '&filetype') ==# 'NvimTree'
+      continue
+    endif
+    let pos = win_screenpos(w)
+    if pos[1] == cur_col
+      call add(wins, { 'num': w, 'row': pos[0] })
+    endif
+  endfor
+
+  if len(wins) <= 1
+    return
+  endif
+
+  call sort(wins, {a, b -> a.row - b.row})
+  let cur_index = -1
+  for i in range(0, len(wins)-1)
+    if wins[i].num == cur_win
+      let cur_index = i
+      break
+    endif
+  endfor
+  if cur_index == -1
+    return
+  endif
+
+  " Move to the previous window in the column (wrap around if needed).
+  let prev_index = (cur_index - 1 + len(wins)) % len(wins)
+  execute wins[prev_index].num . "wincmd w"
+endfunction
+
+" Key Mappings
+nnoremap <C-Right> :call CycleWindowRightNonTree()<CR>
+nnoremap <C-Left>  :call CycleWindowLeftNonTree()<CR>
+nnoremap <C-Down>  :call CycleWindowDownNonTree()<CR>
+nnoremap <C-Up>    :call CycleWindowUpNonTree()<CR>
 
 " =====================================================
 " Theme Configuration: Tokyo Night
