@@ -27,12 +27,6 @@ set smartindent       " Smarter indentation for code.
 " -------------------------
 " Key Mappings: Movement
 " -------------------------
-" Disable arrow keys to force use of hjkl.
-noremap <Up> <NOP>
-noremap <Down> <NOP>
-noremap <Left> <NOP>
-noremap <Right> <NOP>
-
 " -------------------------
 " Misc:  
 " -------------------------
@@ -70,7 +64,87 @@ Plug 'nvim-lualine/lualine.nvim'
 " Neovim Illuminate: Text under cursor
 Plug 'RRethy/vim-illuminate'
 
+"Bufferline: Tabs & TabStyle
+Plug 'akinsho/bufferline.nvim'
+
 call plug#end()
+
+" =====================================================
+" Custom Buffer Close Commands (Enhanced)
+" =====================================================
+" Define a custom command 'Bclose' that deletes the current buffer.
+command! -bang Bclose call s:CloseBuffer(<bang>0)
+function! s:CloseBuffer(bang)
+  " Get a list of all listed buffers.
+  let l:listed_buffers = filter(range(1, bufnr('$')), 'buflisted(v:val)')
+  " If there's only one listed buffer, quit Neovim.
+  if len(l:listed_buffers) <= 1
+    if a:bang
+      execute "qa!"
+    else
+      execute "qa"
+    endif
+  else
+    " Otherwise, delete the current buffer.
+    if a:bang
+      execute "bd!"
+    else
+      execute "bd"
+    endif
+  endif
+endfunction
+
+" Set up command-line abbreviations so that :q, :q!, and :qw act like :Bclose.
+cabbrev <expr> q  getcmdline() ==# 'q'  ? 'Bclose'  : 'q'
+cabbrev <expr> q! getcmdline() ==# 'q!' ? 'Bclose!' : 'q!'
+cabbrev <expr> qw getcmdline() ==# 'qw' ? 'Bclose' : 'qw'
+
+" =====================================================
+" Window Cycling Key Mappings (wrap‑around, skipping NvimTree)
+" =====================================================
+function! CycleWindowRightNonTree()
+  let total = winnr('$')
+  let tried = 0
+  while tried < total
+    " If at the last window, wrap to the first window; otherwise, move right.
+    if winnr() == winnr('$')
+      execute "wincmd t"
+    else
+      execute "wincmd l"
+    endif
+    " If the new window is not NvimTree, stop cycling.
+    if &filetype !=# 'NvimTree'
+      return
+    endif
+    let tried += 1
+  endwhile
+endfunction
+
+function! CycleWindowLeftNonTree()
+  let total = winnr('$')
+  let start = winnr()
+  let cur = start
+  while 1
+    " Compute the previous window number, wrapping if needed.
+    if cur == 1
+      let cur = total
+    else
+      let cur = cur - 1
+    endif
+    " If this window's buffer is not NvimTree, switch focus to it.
+    if getbufvar(winbufnr(cur), '&filetype') !=# 'NvimTree'
+      execute cur . "wincmd w"
+      break
+    endif
+    " If we've come full circle, break out.
+    if cur == start
+      break
+    endif
+  endwhile
+endfunction
+
+nnoremap <C-Right> :call CycleWindowRightNonTree()<CR>   " Map Ctrl+Right to cycle right (skipping NvimTree)
+nnoremap <C-Left>  :call CycleWindowLeftNonTree()<CR>    " Map Ctrl+Left to cycle left (skipping NvimTree)
 
 " =====================================================
 " Theme Configuration: Tokyo Night
@@ -81,6 +155,39 @@ require("tokyonight").setup({
 })
 vim.cmd("colorscheme tokyonight")
 EOF
+
+" =====================================================
+" Bufferline Configuration: akinsho/bufferline.nvim
+" =====================================================
+lua << EOF
+require("bufferline").setup{
+  options = {
+    mode = "buffers",                    -- Show buffers instead of tabs.
+    numbers = "none",                    -- Disable buffer numbers.
+    close_command = "bdelete! %d",        -- Command to close a buffer.
+    indicator = {
+      icon = '▎',                       -- Icon used as a buffer indicator.
+      style = 'icon',
+    },
+    separator_style = "slant",           -- Style of separator between buffers.
+    offsets = {
+      {
+        filetype = "NvimTree",           -- Offset for file explorer.
+        text = "File Explorer",
+        text_align = "left",
+        padding = 1,
+      },
+    },
+    show_buffer_close_icons = true,
+    show_close_icon = false,
+    enforce_regular_tabs = false,
+    always_show_bufferline = true,
+  }
+}
+EOF
+
+nnoremap <S-Left> :BufferLineCyclePrev<CR>
+nnoremap <S-Right> :BufferLineCycleNext<CR>
 
 " =====================================================
 " nvim-illuminate Highlight Groups
@@ -108,7 +215,7 @@ require("nvim-tree").setup({
     local function opts(desc)
       return { desc = "nvim-tree: " .. desc, buffer = bufnr, noremap = true, silent = true, nowait = true }
     end
-    vim.keymap.set("n", "t", api.node.open.tab, opts("Open: New Tab"))
+    vim.keymap.set("n", "o", api.node.open.tab, opts("Open: New Tab"))
     vim.keymap.set("n", "h", api.node.open.horizontal, opts("Open: Split"))
     vim.keymap.set("n", "v", api.node.open.vertical, opts("Open: VSplit"))
   end,
