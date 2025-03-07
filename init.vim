@@ -31,6 +31,7 @@ set smartindent       " Smarter indentation for code.
 " Misc:  
 " -------------------------
 set nowrap            " Disable line wrap
+set splitright        " Open vertical splits to the right
 
 " =====================================================
 " Plugin Management (vim-plug)
@@ -70,9 +71,8 @@ Plug 'akinsho/bufferline.nvim'
 call plug#end()
 
 " =====================================================
-" Custom Buffer Close Commands (Enhanced)
+" Custom Buffer Close Commands (Using alternate buffer)
 " =====================================================
-" Define a custom command 'Bclose' that deletes the current buffer.
 command! -bang Bclose call s:CloseBuffer(<bang>0)
 function! s:CloseBuffer(bang)
   " Get a list of all listed buffers.
@@ -85,19 +85,22 @@ function! s:CloseBuffer(bang)
       execute "qa"
     endif
   else
-    " Otherwise, delete the current buffer.
+    " Switch to the alternate buffer.
+    execute "bprevious"
+    " Delete the alternate buffer (which is now the previous one, using '#')
     if a:bang
-      execute "bd!"
+      execute "bdelete! #"
     else
-      execute "bd"
+      execute "bdelete #"
     endif
   endif
 endfunction
 
-" Set up command-line abbreviations so that :q, :q!, and :qw act like :Bclose.
+" Remap :q, :q!, and :qw to use our Bclose command.
 cabbrev <expr> q  getcmdline() ==# 'q'  ? 'Bclose'  : 'q'
 cabbrev <expr> q! getcmdline() ==# 'q!' ? 'Bclose!' : 'q!'
 cabbrev <expr> qw getcmdline() ==# 'qw' ? 'Bclose' : 'qw'
+
 
 " =====================================================
 " Window Cycling Key Mappings (wrap‑around, skipping NvimTree)
