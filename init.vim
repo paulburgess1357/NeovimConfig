@@ -1,4 +1,4 @@
-" =====================================================
+
 " Basic Settings
 " =====================================================
 
@@ -64,8 +64,13 @@ Plug 'hrsh7th/cmp-buffer'          " Buffer completions.
 " Auto-pairs for automatically inserting closing pairs.
 Plug 'windwp/nvim-autopairs'
 
-call plug#end()
+" Status bar plugin: lualine.nvim.
+Plug 'nvim-lualine/lualine.nvim'
 
+" Neovim Illuminate: Text under cursor
+Plug 'RRethy/vim-illuminate'
+
+call plug#end()
 
 " =====================================================
 " Theme Configuration: Tokyo Night
@@ -77,6 +82,14 @@ require("tokyonight").setup({
 vim.cmd("colorscheme tokyonight")
 EOF
 
+" =====================================================
+" nvim-illuminate Highlight Groups
+" =====================================================
+" Customize the appearance of highlighted words based on usage:
+" - IlluminatedWordRead: For variables read/accessed.
+" - IlluminatedWordWrite: For variables being written/modified.
+highlight IlluminatedWordRead guifg=#FFD700 ctermfg=Yellow
+highlight IlluminatedWordWrite guifg=#FF4500 ctermfg=Red
 
 " =====================================================
 " File Explorer Configuration: nvim-tree
@@ -103,6 +116,34 @@ require("nvim-tree").setup({
 vim.api.nvim_set_keymap("n", "<C-n>", ":NvimTreeToggle<CR>", { noremap = true, silent = true })
 EOF
 
+" =====================================================
+" Status Line Configuration: lualine.nvim
+" =====================================================
+lua << EOF
+require('lualine').setup {
+  options = {
+    theme = 'tokyonight',   -- Match the Tokyo Night theme.
+    section_separators = { left = '', right = '' },
+    component_separators = { left = '', right = '' },
+  },
+  sections = {
+    lualine_a = {'mode'},
+    lualine_b = {'branch'},
+    lualine_c = {'filename'},
+    lualine_x = {'encoding', 'fileformat', 'filetype'},
+    lualine_y = {'progress'},
+    lualine_z = {'location'}
+  },
+  inactive_sections = {
+    lualine_a = {},
+    lualine_b = {},
+    lualine_c = {'filename'},
+    lualine_x = {'location'},
+    lualine_y = {},
+    lualine_z = {}
+  },
+}
+EOF
 
 " =====================================================
 " LSP Configuration: Clangd with clang-tidy
