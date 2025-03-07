@@ -71,27 +71,33 @@ Plug 'akinsho/bufferline.nvim'
 call plug#end()
 
 " =====================================================
-" Custom Buffer Close Commands (Using alternate buffer)
+" Custom Buffer Close Commands (Simplified for split behavior)
 " =====================================================
 command! -bang Bclose call s:CloseBuffer(<bang>0)
 function! s:CloseBuffer(bang)
-  " Get a list of all listed buffers.
-  let l:listed_buffers = filter(range(1, bufnr('$')), 'buflisted(v:val)')
-  " If there's only one listed buffer, quit Neovim.
-  if len(l:listed_buffers) <= 1
+  " If there is more than one window, simply delete the current buffer.
+  if winnr('$') > 1
     if a:bang
-      execute "qa!"
+      execute "bdelete! %"
     else
-      execute "qa"
+      execute "bdelete %"
     endif
   else
-    " Switch to the alternate buffer.
-    execute "bprevious"
-    " Delete the alternate buffer (which is now the previous one, using '#')
-    if a:bang
-      execute "bdelete! #"
+    " Only one window: check listed buffers.
+    let l:listed_buffers = filter(range(1, bufnr('$')), 'buflisted(v:val)')
+    if len(l:listed_buffers) <= 1
+      if a:bang
+        execute "qa!"
+      else
+        execute "qa"
+      endif
     else
-      execute "bdelete #"
+      " More than one listed buffer but still only one window.
+      if a:bang
+        execute "bdelete! %"
+      else
+        execute "bdelete %"
+      endif
     endif
   endif
 endfunction
@@ -100,7 +106,6 @@ endfunction
 cabbrev <expr> q  getcmdline() ==# 'q'  ? 'Bclose'  : 'q'
 cabbrev <expr> q! getcmdline() ==# 'q!' ? 'Bclose!' : 'q!'
 cabbrev <expr> qw getcmdline() ==# 'qw' ? 'Bclose' : 'qw'
-
 
 " =====================================================
 " Window Cycling Key Mappings (wrap‑around, skipping NvimTree)
