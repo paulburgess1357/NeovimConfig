@@ -519,3 +519,13 @@ require('nvim-autopairs').setup{}
 local cmp_autopairs = require('nvim-autopairs.completion.cmp')
 cmp.event:on('confirm_done', cmp_autopairs.on_confirm_done())
 EOF
+
+" =====================================================
+" Jump to Next/Previous Occurrence of the Word Under Cursor
+" =====================================================
+" Map <leader>n to set the search pattern to the current word and jump to the next match.
+nnoremap <leader>n :let @/ = '\V\<'.escape(expand('<cword>'), '/') . '\>'<CR>n
+
+" Map <leader>N to jump to the previous match.
+nnoremap <leader>N :let @/ = '\V\<'.escape(expand('<cword>'), '/') . '\>'<CR>N
+
