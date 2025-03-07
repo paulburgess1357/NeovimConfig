@@ -68,6 +68,9 @@ Plug 'RRethy/vim-illuminate'
 "Bufferline: Tabs & TabStyle
 Plug 'akinsho/bufferline.nvim'
 
+" Rainbow Delimiters for colorful parentheses.
+Plug 'HiPhish/rainbow-delimiters.nvim'
+
 call plug#end()
 
 " =====================================================
