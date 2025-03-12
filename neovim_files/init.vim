@@ -117,9 +117,6 @@ nnoremap <S-Right> :BufferLineCycleNext<CR>
 " =====================================================
 " Load Lua Modules
 " =====================================================
-" =====================================================
-" Load Lua Modules
-" =====================================================
 lua require('theme')
 lua require('window_cycle')
 lua require('bufferline_conf')
