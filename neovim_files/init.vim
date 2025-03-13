@@ -62,6 +62,11 @@ Plug 'akinsho/bufferline.nvim'
 
 " Rainbow Delimiters.
 Plug 'HiPhish/rainbow-delimiters.nvim'
+
+" Telescope and its dependency
+Plug 'nvim-lua/plenary.nvim'
+Plug 'nvim-telescope/telescope.nvim'
+
 call plug#end()
 
 " =====================================================
@@ -126,3 +131,4 @@ lua require('lsp')
 lua require('treesitter')
 lua require('diagnostics')
 lua require('completion')
+lua require('telescope_conf')
