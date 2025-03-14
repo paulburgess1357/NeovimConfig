@@ -67,6 +67,9 @@ Plug 'HiPhish/rainbow-delimiters.nvim'
 Plug 'nvim-lua/plenary.nvim'
 Plug 'nvim-telescope/telescope.nvim'
 
+" Breadcrumb support
+Plug 'SmiteshP/nvim-navic'
+
 call plug#end()
 
 " =====================================================
@@ -126,6 +129,7 @@ lua require('theme')
 lua require('window_cycle')
 lua require('bufferline_conf')
 lua require('nvim_tree')
+lua require('navic_conf')
 lua require('lualine_conf')
 lua require('lsp')
 lua require('treesitter')
