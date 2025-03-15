@@ -26,6 +26,20 @@ set smartindent
 set nowrap
 set splitright
 
+" -------------------------
+" Window Resize Settings
+" -------------------------
+" Use Ctrl+Shift+Arrow Key to adjust
+
+" Vertical split adjustments:
+nnoremap <C-S-Left> :vertical resize +4<CR>
+nnoremap <C-S-Right> :vertical resize -4<CR>
+
+" Horizontal split adjustments:
+nnoremap <C-S-Up> :resize +4<CR>
+nnoremap <C-S-Down> :resize -4<CR>
+
+
 " =====================================================
 " Plugin Management (vim-plug)
 " =====================================================
@@ -127,6 +141,7 @@ nnoremap <S-Right> :BufferLineCycleNext<CR>
 " =====================================================
 lua require('theme')
 lua require('window_cycle')
+lua require('window_resize')
 lua require('bufferline_conf')
 lua require('nvim_tree')
 lua require('navic_conf')
