@@ -39,7 +39,6 @@ nnoremap <C-S-Right> :vertical resize -4<CR>
 nnoremap <C-S-Up> :resize +4<CR>
 nnoremap <C-S-Down> :resize -4<CR>
 
-
 " =====================================================
 " Plugin Management (vim-plug)
 " =====================================================
@@ -139,6 +138,7 @@ nnoremap <S-Right> :BufferLineCycleNext<CR>
 " =====================================================
 " Load Lua Modules
 " =====================================================
+lua require('treesitter')
 lua require('theme')
 lua require('window_cycle')
 lua require('window_resize')
@@ -147,7 +147,6 @@ lua require('nvim_tree')
 lua require('navic_conf')
 lua require('lualine_conf')
 lua require('lsp')
-lua require('treesitter')
 lua require('diagnostics')
 lua require('completion')
 lua require('telescope_conf')
