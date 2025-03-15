@@ -3,3 +3,4 @@ IndentWidth: 2
 ColumnLimit: 140
 PointerAlignment: Left
 ReferenceAlignment: Left
+AllowShortIfStatementsOnASingleLine: true
