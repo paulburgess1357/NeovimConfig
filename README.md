@@ -2,7 +2,7 @@
 
 ---
 
-## Vim (init.vim) Keybindings
+## Vim Keybindings
 
 - **Clear Search Highlight**  
   Key: `Esc`
@@ -15,16 +15,15 @@
   - Previous occurrence: `<leader>N`
 
 - **Buffer Close Abbreviations**  
-  *Replaces default `:q`, `:q!`, and `:qw` commands with a custom `Bclose` command:*  
+  *Replaces default `:q`, `:q!`, and `:qw` with a custom `Bclose` command:*  
   - `q`: Bclose  
   - `q!`: Bclose!  
   - `qw`: Bclose
 
 ---
 
-## Lua Configuration Keybindings
+## Diagnostics & LSP
 
-### Diagnostics & LSP
 - **Toggle Diagnostic Floating Window**  
   Key: `Space` (in normal mode)
 
@@ -40,34 +39,43 @@
 - **Rename Symbol**  
   Key: `<leader>rn`
 
-### Nvim-Tree (File Explorer)
+---
+
+## Nvim-Tree
+
 - **Toggle File Explorer**  
   Key: `CTRL + n`
+
 - **Within Explorer (when attached):**
   - `o`: Open in new tab  
   - `h`: Open in horizontal split  
   - `v`: Open in vertical split
 
-### Window Cycling, Resizing & Buffer Navigation
-- **Cycle Windows** (Arrow direction difference)
+---
+
+## Window & Buffer Management
+
+- **Cycle Windows** (Arrow direction difference)  
   - Left: `CTRL + Left Arrow`  
   - Right: `CTRL + Right Arrow`  
   - Up: `CTRL + Up Arrow`  
   - Down: `CTRL + Down Arrow`
 
-- **Window Resizing** 
+- **Window Resizing**  
+  **Vertical Splits:**  
   - Increase width: `CTRL + Shift + Left Arrow`  
   - Decrease width: `CTRL + Shift + Right Arrow`  
+  **Horizontal Splits:**  
   - Increase height: `CTRL + Shift + Up Arrow`  
   - Decrease height: `CTRL + Shift + Down Arrow`
 
-- **Buffer Navigation** 
+- **Buffer Navigation**  
   - Previous buffer: `Shift + Left Arrow`  
   - Next buffer: `Shift + Right Arrow`
 
 ---
 
-## Common Telescope Commands
+## Telescope Commands
 
 - **Find Files**  
   Command: `:Telescope find_files`  
