@@ -83,7 +83,7 @@ npm install -g bash-language-server
 
 ---
 
-## Diagnostics & LSP
+## Diagnostics & LSP Keybindings
 
 - **Toggle Diagnostic Floating Window**  
   Key: `Space` (in normal mode)
@@ -102,7 +102,7 @@ npm install -g bash-language-server
 
 ---
 
-## Nvim-Tree
+## Nvim-Tree Keybindings
 
 - **Toggle File Explorer**  
   Key: `CTRL + n`
@@ -114,7 +114,7 @@ npm install -g bash-language-server
 
 ---
 
-## Window & Buffer Management
+## Window & Buffer Management Keybindings
 
 - **Cycle Windows** (Arrow direction difference)  
   - Left: `CTRL + Left Arrow`  
