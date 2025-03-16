@@ -1,4 +1,4 @@
-## Neovim Custom Keybindings Quick Reference
+## Neovim Quick Reference
 
 ---
 
