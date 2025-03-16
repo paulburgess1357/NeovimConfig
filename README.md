@@ -49,21 +49,19 @@
   - `v`: Open in vertical split
 
 ### Window Cycling, Resizing & Buffer Navigation
-- **Cycle Windows** (Arrow direction difference)  
+- **Cycle Windows** (Arrow direction difference)
   - Left: `CTRL + Left Arrow`  
   - Right: `CTRL + Right Arrow`  
   - Up: `CTRL + Up Arrow`  
   - Down: `CTRL + Down Arrow`
 
-- **Window Resizing**  
-  **Vertical Splits:**  
+- **Window Resizing** 
   - Increase width: `CTRL + Shift + Left Arrow`  
   - Decrease width: `CTRL + Shift + Right Arrow`  
-  **Horizontal Splits:**  
   - Increase height: `CTRL + Shift + Up Arrow`  
   - Decrease height: `CTRL + Shift + Down Arrow`
 
-- **Buffer Navigation**  
+- **Buffer Navigation** 
   - Previous buffer: `Shift + Left Arrow`  
   - Next buffer: `Shift + Right Arrow`
 
