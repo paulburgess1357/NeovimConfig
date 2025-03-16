@@ -21,6 +21,48 @@
 
 ---
 
+## LSP Setup and Requirements
+
+This Neovim configuration uses several Language Server Protocol (LSP) servers. To ensure full functionality, please install the following packages:
+
+### C/C++ (clangd)
+- **Server:** clangd  
+- **Installation (Ubuntu/Debian):**
+~~~bash
+sudo apt install clangd
+~~~
+- **Additional Tool:** clang-tidy (for enhanced code analysis)  
+  **Installation (Ubuntu/Debian):**
+~~~bash
+sudo apt install clang-tidy
+~~~
+- **Notes:**  
+  The configuration uses additional flags: `--clang-tidy` and `--completion-style=detailed`.
+
+### Python (pyright)
+- **Server:** pyright  
+- **Installation:**
+~~~bash
+npm install -g pyright
+~~~
+
+### Bash (bashls)
+- **Server:** bash-language-server  
+- **Installation:**
+~~~bash
+npm install -g bash-language-server
+~~~
+- **Additional Linting Tools:**  
+  For proper linting, consider installing:
+  - **ShellCheck:**  
+    ~~~bash
+    sudo apt install shellcheck
+    ~~~
+  - **shfmt (optional):**  
+    Install via Snap or manually.
+
+---
+
 ## Vim Keybindings
 
 - **Clear Search Highlight**  
