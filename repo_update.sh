@@ -7,7 +7,7 @@ shopt -s nullglob
 NVIM_SRC="$HOME/.config/nvim"
 CLANG_SRC="$HOME/lc"
 # Destination repository directory
-DEST="$HOME/Repos/neovim_config"
+DEST="$HOME/Repos/NeovimConfig"
 CLANG_DEST="$DEST/clang_files"
 
 echo "Updating repository with init.vim and lua folder from $NVIM_SRC..."
