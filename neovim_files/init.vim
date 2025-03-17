@@ -39,6 +39,14 @@ nnoremap <C-S-Right> :vertical resize -4<CR>
 nnoremap <C-S-Up> :resize +4<CR>
 nnoremap <C-S-Down> :resize -4<CR>
 
+" Terminal:
+" Switch out of insert mode in the terminal
+tnoremap <Esc> <C-\><C-n>
+" Open/toggle terminal instance #2
+nnoremap <leader>t2 :2ToggleTerm<CR>
+" In terminal mode, switch to normal mode then force-close the terminal
+tnoremap <leader>q <C-\><C-n>:bd!<CR>
+
 " =====================================================
 " Plugin Management (vim-plug)
 " =====================================================
@@ -83,6 +91,9 @@ Plug 'nvim-telescope/telescope.nvim'
 " Breadcrumb support
 Plug 'SmiteshP/nvim-navic'
 
+" Terminal integration: toggleterm.
+Plug 'akinsho/toggleterm.nvim'
+
 call plug#end()
 
 " =====================================================
@@ -90,6 +101,12 @@ call plug#end()
 " =====================================================
 command! -bang Bclose call s:CloseBuffer(<bang>0)
 function! s:CloseBuffer(bang)
+  " If the current buffer is a terminal, force-delete it.
+  if &buftype ==# 'terminal'
+    execute "bdelete! %"
+    return
+  endif
+
   if winnr('$') > 1
     if a:bang
       execute "bdelete! %"
@@ -113,6 +130,7 @@ function! s:CloseBuffer(bang)
     endif
   endif
 endfunction
+
 
 " Remap :q, :q!, and :qw to use Bclose.
 cabbrev <expr> q  getcmdline() ==# 'q'  ? 'Bclose'  : 'q'
@@ -150,3 +168,4 @@ lua require('lsp')
 lua require('diagnostics')
 lua require('completion')
 lua require('telescope_conf')
+lua require('toggleterm_conf')

@@ -18,6 +18,7 @@
 - **Rainbow Delimiters:** `HiPhish/rainbow-delimiters.nvim`
 - **Telescope & Dependencies:** `nvim-lua/plenary.nvim`, `nvim-telescope/telescope.nvim`
 - **Breadcrumb Support:** `SmiteshP/nvim-navic`
+- **Terminal Integration** `akinsho/toggleterm.nvim`
 
 ---
 
@@ -133,6 +134,24 @@ npm install -g bash-language-server
 - **Buffer Navigation**  
   - Previous buffer: `Shift + Left Arrow`  
   - Next buffer: `Shift + Right Arrow`
+
+---
+
+## Terminal Integration Keybindings
+
+- **Switch out of Terminal Insert Mode:**  
+  In terminal mode, press `Esc` (mapped to `<C-\><C-n>`) to exit insert mode and enter normal mode.
+
+- **Open/Toggle Terminal Instance #2:**  
+  Key: `<leader>t2`  
+  (For example, if your leader is `\`, press: `\t2`)
+
+- **Force-Close Terminal:**  
+  In terminal mode, press `<leader>q` to switch to normal mode and force-close the terminal (using `:q!`).
+
+*Note:*  
+- The terminal settings use `persist_size = true` so the terminal remembers its size between toggles.  
+- `close_on_exit = true` will automatically close the terminal window when the process exits.
 
 ---
 
