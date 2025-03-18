@@ -26,6 +26,9 @@ set smartindent
 set nowrap
 set splitright
 
+" Remove trailing whitespace before saving
+autocmd BufWritePre * :%s/\s\+$//e
+
 " -------------------------
 " Window Resize Settings
 " -------------------------
