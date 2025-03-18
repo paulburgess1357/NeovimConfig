@@ -42,11 +42,18 @@ nnoremap <C-S-Right> :vertical resize -4<CR>
 nnoremap <C-S-Up> :resize +4<CR>
 nnoremap <C-S-Down> :resize -4<CR>
 
-" Terminal:
+" ----------------------------
+" Terminal Mode and Instances
+" ---------------------------
+
 " Switch out of insert mode in the terminal
 tnoremap <Esc> <C-\><C-n>
-" Open/toggle terminal instance #2
-nnoremap <leader>t2 :2ToggleTerm<CR>
+
+" Create key mappings for terminal instances 1 to 9.
+for i in range(1, 10)
+  execute 'nnoremap <leader>t' . i . ' :' . i . 'ToggleTerm<CR>'
+endfor
+
 " In terminal mode, switch to normal mode then force-close the terminal
 tnoremap <leader>q <C-\><C-n>:bd!<CR>
 
