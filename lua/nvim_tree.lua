@@ -1,7 +1,7 @@
 local api = require("nvim-tree.api")
 require("nvim-tree").setup({
   view = {
-    width = 20,
+    width = 35,
     side = "left",
   },
   filters = {

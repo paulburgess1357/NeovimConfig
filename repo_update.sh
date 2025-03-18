@@ -1,5 +1,7 @@
 #!/bin/bash
 
+# This script isn't necessary to run.  This is used for testing local changes and moving them to this repo.
+
 # Enable nullglob so that non-matching globs expand to nothing.
 shopt -s nullglob
 
