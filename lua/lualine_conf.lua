@@ -12,16 +12,16 @@ end
 require('lualine').setup {
   options = {
     theme = 'tokyonight',
-    section_separators = { left = '|', right = '|' },
-    component_separators = { left = '|', right = '|' },
+    section_separators = { left = '', right = '' },
+    component_separators = { left = '', right = '' },
   },
   sections = {
     lualine_a = {'mode'},
-    lualine_b = { { 'branch', icon = '' } },  -- Adjust the icon as needed
+    lualine_b = { { 'branch', icon = '' } },  -- Git branch icon from devicons
     lualine_c = {'filename', navic_breadcrumb},
     lualine_x = {
       'encoding',
-      { 'fileformat', symbols = { unix = '', dos = '', mac = '' } },
+      { 'fileformat', symbols = { unix = '', dos = '', mac = '' } },
       'filetype'
     },
     lualine_y = {'progress'},
