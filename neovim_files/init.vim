@@ -104,6 +104,9 @@ Plug 'SmiteshP/nvim-navic'
 " Terminal integration: toggleterm.
 Plug 'akinsho/toggleterm.nvim'
 
+" Web Devicons
+Plug 'nvim-tree/nvim-web-devicons'
+
 call plug#end()
 
 " =====================================================
@@ -179,3 +182,5 @@ lua require('diagnostics')
 lua require('completion')
 lua require('telescope_conf')
 lua require('toggleterm_conf')
+lua require('web-devicons_conf')
+
