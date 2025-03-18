@@ -29,6 +29,9 @@ set splitright
 " Remove trailing whitespace before saving
 autocmd BufWritePre * :%s/\s\+$//e
 
+" SpellCheck
+:set spell
+
 " -------------------------
 " Window Resize Settings
 " -------------------------
