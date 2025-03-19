@@ -16,12 +16,13 @@
 - **Illuminate:** [RRethy/vim-illuminate](https://github.com/RRethy/vim-illuminate)
 - **Bufferline:** [akinsho/bufferline.nvim](https://github.com/akinsho/bufferline.nvim)
 - **Rainbow Delimiters:** [HiPhish/rainbow-delimiters.nvim](https://github.com/HiPhish/rainbow-delimiters.nvim)
-- **Telescope & Dependencies:** 
+- **Telescope & Dependencies:**
   - [nvim-lua/plenary.nvim](https://github.com/nvim-lua/plenary.nvim)
   - [nvim-telescope/telescope.nvim](https://github.com/nvim-telescope/telescope.nvim)
 - **Breadcrumb Support:** [SmiteshP/nvim-navic](https://github.com/SmiteshP/nvim-navic)
 - **Terminal Integration:** [akinsho/toggleterm.nvim](https://github.com/akinsho/toggleterm.nvim)
 - **Web Devicons:** [nvim-tree/nvim-web-devicons](https://github.com/nvim-tree/nvim-web-devicons)
+- **Vim Command Completion** [gelguy/wilder.nvim](https://github.com/gelguy/wilder.nvim)
 ---
 
 ## LSP Setup and Requirements
@@ -68,31 +69,31 @@ npm install -g bash-language-server
 
 ## Neovim Setup
 
-**Minimum Version Required:**  
+**Minimum Version Required:**
 v0.10.4
 
-**Clone the Repository:**  
+**Clone the Repository:**
 Clone this repository to your local machine:
 ```bash
 git clone git@github.com:paulburgess1357/NeovimConfig.git
 ```
 
-**Copy Neovim Configuration Files:**  
-1. **Neovim Config Files:**  
+**Copy Neovim Configuration Files:**
+1. **Neovim Config Files:**
    - Copy the `init.vim` file from the `neovim_files` directory to your Neovim configuration directory:
      ```bash
      ~/.config/nvim/
      ```
    - Copy the entire `lua` folder from the repository into the same Neovim configuration directory (`~/.config/nvim/`).
 
-2. **Clang Configuration Files (Optional for C++):**  
-   - The `clang_files` directory contains files like `.clangd`, `.clang-format`, and `.clang-tidy`.  
+2. **Clang Configuration Files (Optional for C++):**
+   - The `clang_files` directory contains files like `.clangd`, `.clang-format`, and `.clang-tidy`.
    - Copy these files to your C++ working directory (or wherever you manage your C++ projects) to maintain consistent clang tool configurations.
 
-**Neovim Download & Installation:**  
+**Neovim Download & Installation:**
 - Download the latest release from the [Neovim homepage](https://neovim.io/).
 
-**Install Plugins:**  
+**Install Plugins:**
 After setting up your configuration, open Neovim and run:
 ```vim
 :PlugInstall
@@ -107,10 +108,10 @@ This will install all the plugins specified in your configuration and update Tre
 
 ## Fonts (Optional)
 
-**Plugin Requirement:**  
+**Plugin Requirement:**
 For proper icon display, [nvim-web-devicons](https://github.com/nvim-tree/nvim-web-devicons) requires a Nerd Font.
 
-**Overview:**  
+**Overview:**
 Nerd Fonts are patched fonts that add a large number of glyphs (icons) to your standard fonts. You can choose any Nerd Font from the [Nerd Fonts website](https://www.nerdfonts.com/).  I use Mononoki.
 
 **Installation Steps:**

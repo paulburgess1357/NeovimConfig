@@ -17,4 +17,3 @@ require('telescope').setup{
 vim.keymap.set("n", "gr", require("telescope.builtin").lsp_references, { noremap = true, silent = true })
 vim.keymap.set("n", "gd", require("telescope.builtin").lsp_definitions, { noremap = true, silent = true })
 
-

@@ -111,6 +111,9 @@ Plug 'akinsho/toggleterm.nvim'
 " Web Devicons
 Plug 'nvim-tree/nvim-web-devicons'
 
+" Autocompletion vim commands in : menu:
+Plug 'gelguy/wilder.nvim'
+
 call plug#end()
 
 " =====================================================
@@ -187,6 +190,7 @@ lua require('completion')
 lua require('telescope_conf')
 lua require('toggleterm_conf')
 lua require('web-devicons_conf')
+lua require('wilder_conf')
 
 " =====================================================
 " Telescope Extensions

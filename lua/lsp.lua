@@ -10,9 +10,7 @@ local on_attach = function(client, bufnr)
     navic.attach(client, bufnr)
   end
 
-  vim.keymap.set("n", "gd", vim.lsp.buf.definition, { noremap = true, silent = true })
   vim.keymap.set("n", "K", vim.lsp.buf.hover, { noremap = true, silent = true })
-  vim.keymap.set("n", "<leader>rn", vim.lsp.buf.rename, { noremap = true, silent = true })
 
   if client.supports_method("textDocument/formatting") then
     vim.cmd([[
