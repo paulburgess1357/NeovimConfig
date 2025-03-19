@@ -97,9 +97,10 @@ Plug 'akinsho/bufferline.nvim'
 " Rainbow Delimiters.
 Plug 'HiPhish/rainbow-delimiters.nvim'
 
-" Telescope and its dependency
+" Telescope and extensions
 Plug 'nvim-lua/plenary.nvim'
 Plug 'nvim-telescope/telescope.nvim'
+Plug 'nvim-telescope/telescope-fzf-native.nvim', { 'do': 'cmake -S. -Bbuild -DCMAKE_BUILD_TYPE=Release && cmake --build build --config Release' }
 
 " Breadcrumb support
 Plug 'SmiteshP/nvim-navic'
@@ -186,4 +187,10 @@ lua require('completion')
 lua require('telescope_conf')
 lua require('toggleterm_conf')
 lua require('web-devicons_conf')
+
+" =====================================================
+" Telescope Extensions
+" =====================================================
+lua require('telescope_fzf_conf')
+
 
