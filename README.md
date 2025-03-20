@@ -90,15 +90,17 @@ To set up a repository for C/C++ development, follow these steps:
 ---
 
 
-## Other Recommendations:
-- **RipGrep (for Telescope)**
+## Telescope Setup / Notes
+- **LiveGrep**
+  - LiveGrep is set to find exact matches.  You can adjust this setting in: /lua/telescope_conf.lua
+- **RipGrep**
   - RipGrep is used by Telescope for its live grep functionality.
   - **Installation (Ubuntu/Debian):**
     ```bash
     sudo apt install ripgrep
     ```
 
-- **fd (for Telescope)**
+- **fd**
   - fd is an optional dependency for Telescope’s file search picker (`find_files`). When installed, Telescope will automatically use fd for faster file searching.
   - **Installation (Ubuntu/Debian):**
     ```bash

@@ -6,6 +6,16 @@ require('telescope').setup{
     path_display = { "smart" },
     file_sorter = require('telescope.sorters').get_fzf_sorter,
     generic_sorter = require('telescope.sorters').get_fzf_sorter,
+    vimgrep_arguments = {
+      'rg',
+      '--color=never',
+      '--no-heading',
+      '--with-filename',
+      '--line-number',
+      '--column',
+      '--smart-case',
+      '-F',  -- fixed-string mode: disables regex interpretation
+    },
   },
   pickers = {
     -- Customize individual pickers here if needed
