@@ -89,6 +89,13 @@ To set up a repository for C/C++ development, follow these steps:
 
 ---
 
+
+## Other Recommendations:
+  - RipGrep (for Telescope)
+  ```bash
+  sudo apt install ripgrep
+  ```
+
 ## Neovim Setup
 
 **Minimum Version Required:**
