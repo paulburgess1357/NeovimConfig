@@ -22,7 +22,8 @@
 - **Breadcrumb Support:** [SmiteshP/nvim-navic](https://github.com/SmiteshP/nvim-navic)
 - **Terminal Integration:** [akinsho/toggleterm.nvim](https://github.com/akinsho/toggleterm.nvim)
 - **Web Devicons:** [nvim-tree/nvim-web-devicons](https://github.com/nvim-tree/nvim-web-devicons)
-- **Vim Command Completion** [gelguy/wilder.nvim](https://github.com/gelguy/wilder.nvim)
+- **Vim Command Completion:** [gelguy/wilder.nvim](https://github.com/gelguy/wilder.nvim)
+
 ---
 
 ## LSP Setup and Requirements
@@ -32,38 +33,59 @@ This Neovim configuration uses several Language Server Protocol (LSP) servers. T
 ### C/C++ (clangd)
 - **Server:** clangd
 - **Installation (Ubuntu/Debian):**
-~~~bash
-sudo apt install clangd
-~~~
+  ```bash
+  sudo apt install clangd
+  ```
 - **Additional Tool:** clang-tidy (for enhanced code analysis)
   **Installation (Ubuntu/Debian):**
-~~~bash
-sudo apt install clang-tidy
-~~~
+  ```bash
+  sudo apt install clang-tidy
+  ```
 - **Notes:**
   The configuration uses additional flags: `--clang-tidy` and `--completion-style=detailed`.
 
 ### Python (pyright)
 - **Server:** pyright
 - **Installation:**
-~~~bash
-npm install -g pyright
-~~~
+  ```bash
+  npm install -g pyright
+  ```
 
 ### Bash (bashls)
 - **Server:** bash-language-server
 - **Installation:**
-~~~bash
-npm install -g bash-language-server
-~~~
+  ```bash
+  npm install -g bash-language-server
+  ```
 - **Additional Linting Tools:**
   For proper linting, consider installing:
   - **ShellCheck:**
-    ~~~bash
+    ```bash
     sudo apt install shellcheck
-    ~~~
+    ```
   - **shfmt (optional):**
     Install via Snap or manually.
+
+---
+
+## Repository Setup for C/C++ Projects
+
+To set up a repository for C/C++ development, follow these steps:
+
+1. **Generate the Compilation Database:**
+   - Run CMake with the export flag. For example:
+     ```bash
+     cmake ../ -DCMAKE_EXPORT_COMPILE_COMMANDS=ON
+     ```
+
+2. **Make a Symlink to the Project Root:**
+   - Create a symlink for the generated `compile_commands.json` in your project root:
+     ```bash
+     ln -s path/to/build/compile_commands.json ./compile_commands.json
+     ```
+
+3. **Copy Clang Configuration Files to the Project Root:**
+   - Copy your configuration files (such as `.clangd`, `.clang-format`, and `.clang-tidy`) into the project root to ensure consistent formatting and diagnostics.
 
 ---
 
@@ -98,7 +120,7 @@ After setting up your configuration, open Neovim and run:
 ```vim
 :PlugInstall
 ```
-If you're using [nvim-treesitter/nvim-treesitter](https://github.com/nvim-treesitter/nvim-treesitter) (which is included in the init file here), run:
+If you're using [nvim-treesitter/nvim-treesitter](https://github.com/nvim-treesitter/nvim-treesitter) (which is included in the init file), run:
 ```vim
 :TSUpdate
 ```
@@ -112,7 +134,7 @@ This will install all the plugins specified in your configuration and update Tre
 For proper icon display, [nvim-web-devicons](https://github.com/nvim-tree/nvim-web-devicons) requires a Nerd Font.
 
 **Overview:**
-Nerd Fonts are patched fonts that add a large number of glyphs (icons) to your standard fonts. You can choose any Nerd Font from the [Nerd Fonts website](https://www.nerdfonts.com/).  I use Mononoki.
+Nerd Fonts are patched fonts that add a large number of glyphs (icons) to your standard fonts. You can choose any Nerd Font from the [Nerd Fonts website](https://www.nerdfonts.com/). I use Mononoki.
 
 **Installation Steps:**
 
@@ -130,7 +152,7 @@ Nerd Fonts are patched fonts that add a large number of glyphs (icons) to your s
      ```bash
      mkdir -p ~/.local/share/fonts
      ```
-   - Copy all the `.ttf` files from the extracted folder to your local fonts directory. For example, if you are in the folder containing the fonts:
+   - Copy all the `.ttf` files from the extracted folder to your local fonts directory:
      ```bash
      cp *.ttf ~/.local/share/fonts/
      ```
@@ -173,6 +195,9 @@ After installing all variants, configure your terminal emulator and any other re
 
 - **Go to Definition**
   Key: `gd`
+
+- **Go to References (using Telescope Live Grep)**
+  Key: `gr`
 
 - **Hover Documentation**
   Key: `K`
@@ -243,11 +268,59 @@ After installing all variants, configure your terminal emulator and any other re
 - **Live Grep**
   Command: `:Telescope live_grep`
   Description: Searches for a given string pattern in all files in your project.
+  (I also map `gr` to trigger this action.)
 
 - **Current Buffer Fuzzy Find**
   Command: `:Telescope current_buffer_fuzzy_find`
   Description: Allows you to search within the current buffer.
- Neovim Custom Keybindings Quick Reference
 
 ---
+
+## Neovim Custom Keybindings Quick Reference
+
+**General Navigation:**
+- **Clear Search Highlight:** `Esc`
+- **Go to Start of File:** `gg`
+- **Search Current Word:**
+  - Next occurrence: `<leader>n`
+  - Previous occurrence: `<leader>N`
+
+**LSP & Diagnostics:**
+- **Go to Definition:** `gd`
+- **Go to References (using Telescope Live Grep):** `gr`
+- **Hover Documentation:** `K`
+- **Rename Symbol:** `<leader>rn`
+- **Toggle Diagnostic Floating Window:** `Space`
+- **Fix Clang Issues / Trigger Code Action:** `<leader>cf`
+
+**File Navigation:**
+- **Toggle File Explorer (Nvim-Tree):** `CTRL + n`
+
+**Window & Buffer Management:**
+- **Cycle Windows:**
+  - Left: `CTRL + Left Arrow`
+  - Right: `CTRL + Right Arrow`
+  - Up: `CTRL + Up Arrow`
+  - Down: `CTRL + Down Arrow`
+- **Window Resizing:**
+  - Vertical Splits:
+    - Increase width: `CTRL + Shift + Left Arrow`
+    - Decrease width: `CTRL + Shift + Right Arrow`
+  - Horizontal Splits:
+    - Increase height: `CTRL + Shift + Up Arrow`
+    - Decrease height: `CTRL + Shift + Down Arrow`
+- **Buffer Navigation:**
+  - Previous buffer: `Shift + Left Arrow`
+  - Next buffer: `Shift + Right Arrow`
+
+**Terminal Integration:**
+- **Exit Terminal Insert Mode:** Press `Esc` (mapped to `<C-\><C-n>`)
+- **Open/Toggle Terminal Instance #2:** `<leader>t2`
+- **Force-Close Terminal:** `<leader>q`
+
+**Telescope Commands:**
+- **Find Files:** `:Telescope find_files`
+- **Live Grep:** `:Telescope live_grep`
+- **Current Buffer Fuzzy Find:** `:Telescope current_buffer_fuzzy_find`
+
 
