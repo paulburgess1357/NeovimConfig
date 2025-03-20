@@ -91,10 +91,19 @@ To set up a repository for C/C++ development, follow these steps:
 
 
 ## Other Recommendations:
-  - RipGrep (for Telescope)
-  ```bash
-  sudo apt install ripgrep
-  ```
+- **RipGrep (for Telescope)**
+  - RipGrep is used by Telescope for its live grep functionality.
+  - **Installation (Ubuntu/Debian):**
+    ```bash
+    sudo apt install ripgrep
+    ```
+
+- **fd (for Telescope)**
+  - fd is an optional dependency for Telescope’s file search picker (`find_files`). When installed, Telescope will automatically use fd for faster file searching.
+  - **Installation (Ubuntu/Debian):**
+    ```bash
+    sudo apt install fd-find
+    ```
 
 ## Neovim Setup
 
