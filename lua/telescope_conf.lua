@@ -1,17 +1,27 @@
--- Telescope configuration remains the same
+-- Telescope configuration using FZF as the default sorter
 require('telescope').setup{
   defaults = {
     prompt_prefix = "> ",
     selection_caret = "> ",
     path_display = { "smart" },
+    file_sorter = require('telescope.sorters').get_fzf_sorter,
+    generic_sorter = require('telescope.sorters').get_fzf_sorter,
   },
   pickers = {
     -- Customize individual pickers here if needed
   },
   extensions = {
-    -- Configuration for extensions (if you add any)
-  }
+    fzf = {
+      fuzzy = true,                    -- enable fuzzy matching
+      override_generic_sorter = true,  -- override the generic sorter
+      override_file_sorter = true,     -- override the file sorter
+      case_mode = "smart_case",        -- use smart case matching
+    },
+  },
 }
+
+-- Load the fzf extension
+require('telescope').load_extension('fzf')
 
 -- Key mappings for Telescope LSP pickers:
 vim.keymap.set("n", "gr", require("telescope.builtin").lsp_references, { noremap = true, silent = true })

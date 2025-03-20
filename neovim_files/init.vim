@@ -192,9 +192,3 @@ lua require('toggleterm_conf')
 lua require('web-devicons_conf')
 lua require('wilder_conf')
 
-" =====================================================
-" Telescope Extensions
-" =====================================================
-lua require('telescope_fzf_conf')
-
-
