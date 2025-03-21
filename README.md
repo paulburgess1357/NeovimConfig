@@ -23,6 +23,7 @@
 - **Terminal Integration:** [akinsho/toggleterm.nvim](https://github.com/akinsho/toggleterm.nvim)
 - **Web Devicons:** [nvim-tree/nvim-web-devicons](https://github.com/nvim-tree/nvim-web-devicons)
 - **Vim Command Completion:** [gelguy/wilder.nvim](https://github.com/gelguy/wilder.nvim)
+- **Loading Status** [Plug j-hui/fidget.nvim](https://github.com/j-hui/fidget.nvim)
 
 ---
 

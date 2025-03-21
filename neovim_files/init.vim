@@ -114,6 +114,9 @@ Plug 'nvim-tree/nvim-web-devicons'
 " Autocompletion vim commands in : menu:
 Plug 'gelguy/wilder.nvim'
 
+" Loading status
+Plug 'j-hui/fidget.nvim'
+
 call plug#end()
 
 " =====================================================
@@ -191,4 +194,5 @@ lua require('telescope_conf')
 lua require('toggleterm_conf')
 lua require('web-devicons_conf')
 lua require('wilder_conf')
+lua require('fidget_conf')
 

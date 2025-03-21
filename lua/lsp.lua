@@ -30,7 +30,7 @@ end
 --   - --background-index: Index files in the background so all files are searchable.
 --   - Explicit root_dir ensures that clangd sees your full project (using compile_commands.json, compile_flags.txt, or .git).
 lspconfig.clangd.setup({
-  cmd = { "clangd", "--background-index", "--clang-tidy", "--completion-style=detailed" },
+  cmd = { "clangd", "--background-index", "--clang-tidy", "--completion-style=detailed", "--log=error"},
   capabilities = capabilities,
   on_attach = on_attach,
   root_dir = lspconfig.util.root_pattern("compile_commands.json", "compile_flags.txt", ".git"),
