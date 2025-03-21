@@ -195,4 +195,6 @@ lua require('toggleterm_conf')
 lua require('web-devicons_conf')
 lua require('wilder_conf')
 lua require('fidget_conf')
+lua require('clang_index_all')
+
 
